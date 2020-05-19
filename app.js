@@ -2,9 +2,9 @@ const express = require('express')
 const app = express()
 // let http = reuire('http').Server(app)
 // var fs = require('fs')
-// const authToken = db.setAuthorization('AJ_Diaz', 'Jackie')
 const { HarperDBConnect } = require('harperdb-connect')
-const db = new HarperDBConnect('AJ_Diaz', 'Jackie')
+const db = new HarperDBConnect('AJ_Diaz', 'jackie')
+const authToken = db.setAuthorization('AJ_Diaz', 'jackie')
 
 db.setDefaultOptions({
     method: 'POST',
@@ -13,9 +13,12 @@ db.setDefaultOptions({
         },
         json: true
     })
-
-db.connect('http://localhost:9925')
-.then(() => console.log("Connected!"))
+    db.connect('http://localhost:9925')
+    .then(() => {
+        db.request({ operation: "describe_all" })
+          .then(res => console.log(res))
+          .catch(err => console.error(err))
+})
 .catch(err => console.log(err))
 
 const connectToDB = async () => {
@@ -29,9 +32,6 @@ const connectToDB = async () => {
 
 
 
-// db.request({ operation: "describe_all" })
-//   .then(res => console.log(res))
-//   .catch(err => console.error(err))
 
 
         
